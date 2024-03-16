@@ -4,11 +4,6 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">My Posts</h1>
     </div>
-    @if (session()->has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-        </div>
-    @endif
 
     <div class="table-responsive">
         <a href="/dashboard/posts/create" class="btn btn-outline-primary">Create New Post</a>
@@ -34,17 +29,64 @@
                             <a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning"> <span
                                     data-feather="edit"></span>
                             </a>
-                            <form action="/dashboard/posts/{{ $post->slug }}" method="POST" class="d-inline">
+                            <form id="delete" action="/dashboard/posts/{{ $post->slug }}" method="POST"
+                                class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><span
+                                <button id="delete-posts" class="badge bg-danger border-0"><span
                                         data-feather="x-circle"></span></button>
                             </form>
-                            </a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                title: "Success!",
+                text: "Create Post Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+    <script>
+        @if (session('update'))
+            Swal.fire({
+                title: "Success!",
+                text: "Update Post Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+    <script>
+        @if (session('delete'))
+            Swal.fire({
+                title: "Success!",
+                text: "Delete Post Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+
+    {{-- <script>
+        $('#delete-posts').on('click', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure ?',
+                text: "You won't be able to revert this !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete').submit();
+                }
+            })
+        });
+    </script> --}}
 @endsection

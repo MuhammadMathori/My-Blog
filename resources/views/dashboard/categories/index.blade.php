@@ -4,11 +4,11 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Post Categories</h1>
     </div>
-    @if (session()->has('success'))
+    {{-- @if (session()->has('success'))
         <div class="alert alert-success col-lg-6" role="alert">
             {{ session('success') }}
         </div>
-    @endif
+    @endif --}}
 
     <div class="table-responsive col-lg-6">
         <a href="/dashboard/categories/create" class="btn btn-outline-primary">Create New Category</a>
@@ -26,23 +26,68 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            <a href="/dashboard/categories/{{ $category->slug }}" class="badge bg-info"> <span
-                                    data-feather="eye"></span>
-                            </a>
+
                             <a href="/dashboard/categories/{{ $category->slug }}/edit" class="badge bg-warning"> <span
                                     data-feather="edit"></span>
                             </a>
                             <form action="/dashboard/categories/{{ $category->slug }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><span
+                                <button class="badge bg-danger border-0 show_confirm"><span
                                         data-feather="x-circle"></span></button>
                             </form>
-                            </a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                title: "Success!",
+                text: "Create Category Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+    <script>
+        @if (session('update'))
+            Swal.fire({
+                title: "Success!",
+                text: "Update Category Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+    <script>
+        @if (session('delete'))
+            Swal.fire({
+                title: "Success!",
+                text: "Delete Category Successfull!",
+                icon: "success"
+            });
+        @endif
+    </script>
+    {{-- <script>
+        $(".show_confirm").click(function(e) {
+            var form = $(this).closest("form");
+
+            e.preventDefault();
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+
+        });
+    </script> --}}
 @endsection

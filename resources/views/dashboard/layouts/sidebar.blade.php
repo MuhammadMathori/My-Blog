@@ -15,7 +15,7 @@
             </li>
         </ul>
         @can('admin')
-            <h5 class="sidebar-heading d-flex justify-content-betwwn align-item-center px-3 mt-4 mb-1">
+            <h5 class="sidebar-heading d-flex justify-content-betwwn align-item-center px-3 mt-4 mb-1 text-muted">
                 <span>Administrator</span>
             </h5>
             <ul class="nav flex-column">

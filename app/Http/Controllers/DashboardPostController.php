@@ -53,7 +53,7 @@ class DashboardPostController extends Controller
         $validateData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::create($validateData);
-        return redirect('/dashboard/posts')->with('success', 'New post successfull');
+        return redirect('/dashboard/posts')->with('success', 'Create New Post Successfull');
     }
 
     /**
@@ -107,7 +107,7 @@ class DashboardPostController extends Controller
         $validateData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::where('id', $post->id)->update($validateData);
-        return redirect('/dashboard/posts')->with('success', 'Update successfull');
+        return redirect('/dashboard/posts')->with('update', 'Update Post Successfull');
     }
 
     /**
@@ -118,8 +118,10 @@ class DashboardPostController extends Controller
         if ($post->image) {
             Storage::delete($post->image);
         }
-        Post::destroy($post->id);
-        return redirect('/dashboard/posts')->with('success', 'Post Has been deleted!');
+        // Post::destroy($post->id);
+        // Session::flash('success', 'delete category successfull');
+        $post->delete();
+        return redirect('/dashboard/posts')->with('delete', 'Post Deleted Successfull!');
     }
     public function checkSlug(Request $request)
     {
